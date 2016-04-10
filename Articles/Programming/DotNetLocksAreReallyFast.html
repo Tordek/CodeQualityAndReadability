@@ -59,8 +59,9 @@
 <li><a href="#testing-multi-threaded-code">5. Testing multi-threaded code</a></li>
 <li><a href="#conclusion">6. Conclusion</a></li>
 </ul>
-<p>At MVNO I was doing multi-threaded programming for an integrations project with a third party application. At some point we wondered what the speed of the <code>lock()</code> construct was. Was it a slow operation to be used with care? Rather than relying on Internet hear-say I measured the situation for my use case. </p>
+<p>At my company I was doing multi-threaded programming for an integrations project with a third party application. At some point we wondered what the speed of the <code>lock()</code> construct was. Was it a slow operation to be used with care? Rather than relying on Internet hear-say I measured the situation for my use case. </p>
 <p>The third party system required for each call a sequence number to be supplied with calls. Since we do communication through multiple threads, we need a <code>Sequence</code> abstraction that is shared among the threads. Let's give this a first stab.</p>
+<p>Notice, this is a two-part article, part two <a href="StrategiesForFastThreadSafeCode.html">is found here</a></p>
 <h2 id="the-unsafe-approach">1. The unsafe approach</h2>
 <pre class="prettyprint"><code>public class Sequence 
 {
@@ -210,7 +211,7 @@
 <p>The trick to testing this is to ensure that by merging all numbers from all workers, there must not be any duplicate entries. If each worker must draw 800.000 number and we have 13 workers, we know the list of all messages should be 800.000 * 13. If we have duplicates the <code>Distinct()</code> call removes these and the total messages is below the expected number.</p>
 <h2 id="conclusion">6. Conclusion</h2>
 <p>For workers doing very little work, the <code>lock()</code> construct is amazingly fast. Very close to a low-level busy-wait strategy.</p>
-<p>In the next installment, I'll show using other features of the <code>Interlocked</code> Api, that achieves speed close to the thread-unsafe implementation!</p>
+<p><a href="StrategiesForFastThreadSafeCode.html">In the next installment</a>, I'll show using other features of the <code>Interlocked</code> Api, that achieves speed close to the thread-unsafe implementation!</p>
 <p>Please show your support by sharing and voting:</p>
 <p><a href="https://www.reddit.com/submit?url=http://firstclassthoughts.co.uk/Articles/Programming/DotNetLocksAreReallyFast.html&amp;title=.Net%20`lock`%20is%20really%20fast!"><img src="http://firstclassthoughts.co.uk/img/reddit.png" alt="Reddit this" /></a>
 <a href="https://twitter.com/intent/tweet?url=http://firstclassthoughts.co.uk/Articles/Programming/DotNetLocksAreReallyFast.html&amp;text=.Net%20`lock`%20is%20really%20fast!&amp;via=kbilsted"><img src="http://firstclassthoughts.co.uk/img/twitter.png" alt="Tweet this" /></a>
