@@ -55,7 +55,7 @@
 <li><a href="#multitenancy-one-database-for-multiple-application-instances">2. Multitenancy: One database for multiple application instances</a></li>
 <li><a href="#one-databases-for-one-application-instance">3. One databases for one application instance</a></li>
 <li><a href="#oltp-olap-segregation-two-databases-for-one-application-instance">4. OLTP-OLAP segregation: Two databases for one application instance</a></li>
-<li><a href="#​-multiple-databases-for-one-application-instance">​5. Multiple databases for one application instance</a></li>
+<li><a href="#multiple-databases-for-one-application-instance">5. Multiple databases for one application instance</a></li>
 <li><a href="#summary">6. Summary</a></li>
 </ul>
 <p>With the rise of the micro service architecture in particular, we see a new way of organizing data storage of an application. From ancient time (1960s) till today we see vastly different perspectives on what constitutes proper database design. Not surprisingly, the technical evolution of the hardware databases are running on impacts how we use them. But just as importantly, the growing dependence on tooling and the maturity of those, raises the bar for increasingly looser coupling.</p>
@@ -137,7 +137,7 @@
 <li>Backup and restore is a bit more involved as several databases need to be operated on.</li>
 </ul>
 <p>Required tooling maturity: 5</p>
-<h2 id="multiple-databases-for-one-application-instance">​5. Multiple databases for one application instance</h2>
+<h2 id="multiple-databases-for-one-application-instance">5. Multiple databases for one application instance</h2>
 <p>This is the idea that a single application instance is using <em>several</em> databases for storing its state. The databases may (mix and match different technologies)[http://www.martinfowler.com/bliki/PolyglotPersistence.html] (e.g. SQL and NoSQL) that best fit the problem domain. The choice of database technology hinges on whether your business data is more in alignment with say a graph than a relation database. For example, you centralize all logging in ElasticSearch and all your performance metrics in InfluxDb. These services are tailored for these exact use scenarios. And similarly, other parts of your application may choose to store its data in a database of its own. Yes, we are now entering the land of micro services. And while not explicitly shown in the depiction, this architecture can easily encompass one or more OLAP databases thrown into the mix.​</p>
 <p>Contrasting this architecture to the architecture of (1) this architecture seems almost perverted - the sheer resources required for servers and inter-service communication is staggering.​​ Not to mention, it is quite common for micro services to store state from other parts of the system in their own database in order to reduce the number of requests to other services. Hence the storage requirements rise. A service may choose to listen to one or more kinds of events, and it may update its state about other parts of the system through said events' payload. </p>
 <p>An important side note to this architecture is a considered need for infrastructure. With loose coupling you need a communication mechanism. With the many independent processes on many machines, a simple logging of program state requires tools such as a shared storage for logging messages as it quickly becomes impractical to log on to several machines. </p>
