@@ -125,7 +125,7 @@
 <p>The hint here to improving speed, is that </p>
 <ul>
 <li><code>string.Format()</code> and <code>Substring()</code> are costly compared to the cost of <code>lock</code>. </li>
-<li>These operations does not mutate state defined outside our <code>Netxt</code> method.</li>
+<li>These operations does not mutate state defined outside our <code>Next</code> method.</li>
 </ul>
 <p>Recall, that with each method invocation, state declared inside the method is instantiated. Hence code that only operate on method-local state is thread safe out of the box. So by making a local copy of the state that needs be type safely mutated, we can leave the rest of the code outside the lock. </p>
 <p>Really, this is simply a repeat of the theory explained by <a href="https://en.wikipedia.org/wiki/Amdahl%27s_law">Amdahl's law</a>. So let's apply theory to practice:</p>
